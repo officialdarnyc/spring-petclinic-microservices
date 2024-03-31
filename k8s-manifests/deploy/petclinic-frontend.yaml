@@ -18,6 +18,7 @@ spec:
     port: 8080
   selector:
     app: petclinic-frontend
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
