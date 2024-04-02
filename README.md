@@ -42,7 +42,7 @@ Build all images and push them to the Docker registry:
     ./push-images.sh
     ```
 
-## Deploying to Kubernetes
+## Deploying to Kubernetes without Istio Service Mesh
 
 Create the `spring-petclinic` namespace for the deployment:
 
@@ -50,27 +50,68 @@ Create the `spring-petclinic` namespace for the deployment:
 kubectl apply -f k8s-manifests/namespace.yaml
 ```
 
+### Install Nginx Ingess Controller
+
+Run:
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
+```
+
+Verify Nginx Ingress Controller has been assigned a Public IP:
+
+```bash
+kubectl get service ingress-nginx-controller -n ingress-nginx
+```
+
 ### Set up MySQL databases
 
 Using the K8s package manager, Helm, deploy separate database statefulset for each microservice.
 
+Add the bitnami repository to your helm client:
+
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
-helm repo update
-helm install vets-db-mysql bitnami/mysql --namespace spring-petclinic --set auth.database=service_instance_db
-helm install visits-db-mysql bitnami/mysql --namespace spring-petclinic --set auth.database=service_instance_db
-helm install customers-db-mysql bitnami/mysql --namespace spring-petclinic --set auth.database=service_instance_db
 ```
+
+Update the bitnami charts:
+
+```bash
+helm repo update bitnami
+```
+
+Deploy the databases for each microservice with `service_instance_db` set as the DB name:
+
+1. Vets service:
+    ```bash
+    helm install vets-db-mysql bitnami/mysql --namespace spring-petclinic --set auth.database=service_instance_db
+    ```
+2. Visits service:
+    ```bash
+    helm install visits-db-mysql bitnami/mysql --namespace spring-petclinic --set auth.database=service_instance_db
+    ```
+3. Customers service:
+    ```bash
+    helm install customers-db-mysql bitnami/mysql --namespace spring-petclinic --set auth.database=service_instance_db
+    ```
 
 ### Deploying the microservices
 
-Apply the Kubernetes manifests located in the `k8s-manifests/deploy` directory to create the Kubernetes objects, ServiceAccount, Deployment, and Service, for each microservice.
+Apply the Kubernetes manifests located in the `k8s-manifests/deploy` directory to create the Kubernetes objects - ServiceAccount, Deployment, and Service, for each microservice. The manifests reference the image registry environment variable, and so are passed through `envsubst` for resolution before being applied to the K8s cluster.
 
 ```bash
 cat k8s-manifests/deploy/*.yaml | envsubst | kubectl apply -f -
 ```
 
-You can now browse to that IP in your browser and see the application running.
+### Expose the services through an Ingress
+
+The `k8s-manifests/ingress/ingress.yaml` will be used to configure path-based routing to direct traffic to the appropriate application endpoints.
+
+```bash
+kubectl apply -f k8s-manifests/ingress/ingress.yaml
+```
+
+Access the app via the Public IP assigned to the ingress controller and see the application running.
 
 
 ## License
