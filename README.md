@@ -1,8 +1,8 @@
-# Distributed version of Spring PetClinic
+# Distributed version of the Spring PetClinic application
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/officialdarnyc/spring-petclinic-microservices) [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=7517918)
 
-This repository is derived from the [Spring PetClinic Microservices](https://github.com/spring-petclinic/spring-petclinic-microservices) version. It has been modified describing how to build the container image for each of the microservice (vets, visits, customers, and petclinic-frontend) and deploy them to a managed K8s service, AKS.
+This repository is derived from the open source [Spring PetClinic Microservices](https://github.com/spring-petclinic/spring-petclinic-microservices) application. It has been modified describing how to build the container image for each of the microservice (vets, visits, customers, and petclinic-frontend) and deploy them to a managed K8s service, AKS.
 
 For general information about the PetClinic sample application, see the [Spring PetClinic](https://spring-petclinic.github.io/) website.
 
@@ -42,7 +42,7 @@ Build all images and push them to the Docker registry:
     ./push-images.sh
     ```
 
-## Deploying to Kubernetes without Istio Service Mesh
+## Deploying to Kubernetes
 
 Create the `spring-petclinic` namespace for the deployment:
 
