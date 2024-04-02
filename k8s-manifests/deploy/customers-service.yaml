@@ -3,6 +3,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: customers-service
+  namespace: spring-petclinic
   labels:
     account: customers-service
 ---
@@ -10,6 +11,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: customers-service
+  namespace: spring-petclinic
   labels:
     app: customers-service
 spec:
@@ -23,6 +25,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: customers-v1
+  namespace: spring-petclinic
   labels:
     app: customers-service
     version: v1
@@ -66,13 +69,14 @@ spec:
               command: ["sh", "-c", "sleep 10"]
         resources:
           requests:
-            cpu: 500m
-            memory: 1Gi
+            cpu: 250m
+            memory: 128Mi
           limits:
+            cpu: 500m
             memory: 1Gi
         env:
         - name: SPRING_DATASOURCE_URL
-          value: jdbc:mysql://customers-db-mysql.default.svc.cluster.local:3306/service_instance_db
+          value: jdbc:mysql://customers-db-mysql.spring-petclinic.svc.cluster.local:3306/service_instance_db
         - name: SPRING_DATASOURCE_USERNAME
           value: root
         - name: SPRING_DATASOURCE_PASSWORD

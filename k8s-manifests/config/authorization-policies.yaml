@@ -11,7 +11,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/default/sa/vets-service"]
+        principals: ["cluster.local/ns/spring-petclinic/sa/vets-service"]
     to:
     - operation:
         ports: ["3306"]
@@ -28,7 +28,7 @@ spec:
   rules:
     - from:
         - source:
-            principals: ["cluster.local/ns/default/sa/customers-service"]
+            principals: ["cluster.local/ns/spring-petclinic/sa/customers-service"]
       to:
         - operation:
             ports: ["3306"]
@@ -45,7 +45,7 @@ spec:
   rules:
     - from:
         - source:
-            principals: ["cluster.local/ns/default/sa/visits-service"]
+            principals: ["cluster.local/ns/spring-petclinic/sa/visits-service"]
       to:
         - operation:
             ports: ["3306"]

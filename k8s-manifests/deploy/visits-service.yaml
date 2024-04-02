@@ -3,6 +3,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: visits-service
+  namespace: spring-petclinic
   labels:
     account: visits-service
 ---
@@ -10,6 +11,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: visits-service
+  namespace: spring-petclinic
   labels:
     app: visits-service
 spec:
@@ -23,6 +25,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: visits-v1
+  namespace: spring-petclinic
   labels:
     app: visits-service
     version: v1
@@ -66,15 +69,16 @@ spec:
               command: ["sh", "-c", "sleep 10"]
         resources:
           requests:
-            cpu: 500m
-            memory: 1Gi
+            cpu: 250m
+            memory: 128Mi
           limits:
+            cpu: 500m
             memory: 1Gi
         env:
         - name: DELAY_MILLIS
           value: "0"
         - name: SPRING_DATASOURCE_URL
-          value: jdbc:mysql://visits-db-mysql.default.svc.cluster.local:3306/service_instance_db
+          value: jdbc:mysql://visits-db-mysql.spring-petclinic.svc.cluster.local:3306/service_instance_db
         - name: SPRING_DATASOURCE_USERNAME
           value: root
         - name: SPRING_DATASOURCE_PASSWORD

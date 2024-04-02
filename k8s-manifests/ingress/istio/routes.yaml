@@ -16,7 +16,7 @@ spec:
         uri: "/"
       route:
       - destination:
-          host: customers-service.default.svc.cluster.local
+          host: customers-service.spring-petclinic.svc.cluster.local
           port:
             number: 8080
     - match:
@@ -26,7 +26,7 @@ spec:
         uri: "/"
       route:
       - destination:
-          host: visits-service.default.svc.cluster.local
+          host: visits-service.spring-petclinic.svc.cluster.local
           port:
             number: 8080
       timeout: 4s
@@ -37,7 +37,7 @@ spec:
         uri: "/"
       route:
       - destination:
-          host: vets-service.default.svc.cluster.local
+          host: vets-service.spring-petclinic.svc.cluster.local
           port:
             number: 8080
     - match:
@@ -45,11 +45,11 @@ spec:
             prefix: "/api/gateway"
       route:
         - destination:
-            host: petclinic-frontend.default.svc.cluster.local
+            host: petclinic-frontend.spring-petclinic.svc.cluster.local
             port:
               number: 8080
     - route:
         - destination:
-            host: petclinic-frontend.default.svc.cluster.local
+            host: petclinic-frontend.spring-petclinic.svc.cluster.local
             port:
               number: 8080
