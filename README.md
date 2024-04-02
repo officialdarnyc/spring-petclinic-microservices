@@ -105,10 +105,10 @@ cat k8s-manifests/deploy/*.yaml | envsubst | kubectl apply -f -
 
 ### Expose the services through an Ingress
 
-The `k8s-manifests/ingress/ingress.yaml` will be used to configure path-based routing to direct traffic to the appropriate application endpoints.
+The `k8s-manifests/ingress/nginx-ingress.yaml` will be used to configure path-based routing to direct traffic to the appropriate application endpoints.
 
 ```bash
-kubectl apply -f k8s-manifests/ingress/ingress.yaml
+kubectl apply -f k8s-manifests/ingress/nginx-ingress.yaml
 ```
 
 Access the app via the Public IP assigned to the ingress controller and see the application running.
