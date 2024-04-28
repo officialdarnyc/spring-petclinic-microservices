@@ -94,6 +94,10 @@ Deploy the databases for each microservice with `service_instance_db` set as the
     ```bash
     helm install customers-db-mysql bitnami/mysql --namespace spring-petclinic --set auth.database=service_instance_db
     ```
+4. Confirm all the database servers has been deployed:
+    ```bash
+    kubectl get Statefulset -n spring-petclinic
+    ```
 
 ### Deploying the microservices
 

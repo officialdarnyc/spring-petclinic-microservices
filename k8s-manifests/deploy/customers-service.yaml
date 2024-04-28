@@ -30,7 +30,7 @@ metadata:
     app: customers-service
     version: v1
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: customers-service
@@ -40,15 +40,15 @@ spec:
       labels:
         app: customers-service
         version: v1
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "8080"
-        prometheus.io/path: "/actuator/prometheus"
+      # annotations:
+      #   prometheus.io/scrape: "true"
+      #   prometheus.io/port: "8080"
+      #   prometheus.io/path: "/actuator/prometheus"
     spec:
       serviceAccountName: customers-service
       containers:
       - name: customers-service
-        image: ${PULL_IMAGE_REGISTRY}/petclinic-customers-service:latest
+        image: ${PULL_IMAGE_REGISTRY}/petclinic-customers-service:latest  # ${PULL_IMAGE_REGISTRY}=officialdarnyc
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -69,11 +69,11 @@ spec:
               command: ["sh", "-c", "sleep 10"]
         resources:
           requests:
-            cpu: 250m
+            cpu: 125m
             memory: 128Mi
           limits:
-            cpu: 1000m
-            memory: 1Gi
+            cpu: 2000m  # equals 2 cores. This was set for performance testing purposes
+            memory: 2Gi  # equals 2048Mi. This was set for performance testing purposes
         env:
         - name: SPRING_DATASOURCE_URL
           value: jdbc:mysql://customers-db-mysql.spring-petclinic.svc.cluster.local:3306/service_instance_db

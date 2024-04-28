@@ -40,15 +40,15 @@ spec:
       labels:
         app: petclinic-frontend
         version: v1
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "8080"
-        prometheus.io/path: "/actuator/prometheus"
+      # annotations:
+      #   prometheus.io/scrape: "true"
+      #   prometheus.io/port: "8080"
+      #   prometheus.io/path: "/actuator/prometheus"
     spec:
       serviceAccountName: petclinic-frontend
       containers:
       - name: petclinic-frontend
-        image: ${PULL_IMAGE_REGISTRY}/petclinic-frontend:latest
+        image: ${PULL_IMAGE_REGISTRY}/petclinic-frontend:latest  # ${PULL_IMAGE_REGISTRY}=officialdarnyc
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -69,7 +69,7 @@ spec:
               command: ["sh", "-c", "sleep 10"]
         resources:
           requests:
-            cpu: 250m
+            cpu: 125m
             memory: 128Mi
           limits:
             cpu: 500m
