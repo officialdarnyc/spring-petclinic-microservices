@@ -3,6 +3,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: petclinic-routes
+  namespace: spring-petclinic
 spec:
   hosts:
   - "*"
