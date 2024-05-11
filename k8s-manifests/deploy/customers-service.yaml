@@ -30,7 +30,7 @@ metadata:
     app: customers-service
     version: v1
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: customers-service
