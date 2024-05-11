@@ -50,7 +50,9 @@ Create the `spring-petclinic` namespace for the deployment:
 kubectl apply -f k8s-manifests/namespace.yaml
 ```
 
-### Install Nginx Ingess Controller
+### Install Nginx Ingress Controller
+
+Note: To use Istio instead of Nginx, skip this section and go to [this README](https://github.com/officialdarnyc/spring-petclinic-microservices/tree/master/k8s-manifests/ingress/istio#readme)
 
 Run:
 
